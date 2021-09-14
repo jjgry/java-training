@@ -1,4 +1,4 @@
-package com.scottlogic.training;
+package com.scottlogic.training.direction;
 
 public enum Direction {
     BUY,

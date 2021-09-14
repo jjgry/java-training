@@ -1,4 +1,7 @@
-package com.scottlogic.training;
+package com.scottlogic.training.state;
+
+import com.scottlogic.training.order.Order;
+import com.scottlogic.training.trade.Trade;
 
 import java.util.ArrayList;
 import java.util.List;

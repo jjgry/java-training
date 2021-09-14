@@ -1,4 +1,4 @@
-package com.scottlogic.training.api;
+package com.scottlogic.training.order;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -19,8 +19,8 @@ public class OrdersController {
     }
 
     @PostMapping("/orders")
-    public OrdersDTO postOrder(@RequestBody OrderRequest orderRequest) {
-        matcher.receiveOrder(orderRequest.makeOrder());
+    public OrdersDTO postOrder(@RequestBody OrderDTO orderDTO) {
+        matcher.receiveOrder(orderDTO.makeOrder());
         return new OrdersDTO(counter.incrementAndGet(), matcher.state.getOrders());
     }
 }

@@ -1,5 +1,11 @@
 package com.scottlogic.training;
 
+import com.scottlogic.training.direction.Direction;
+import com.scottlogic.training.match.Match;
+import com.scottlogic.training.order.Order;
+import com.scottlogic.training.state.State;
+import com.scottlogic.training.trade.Trade;
+
 import java.util.List;
 
 public class Matcher {

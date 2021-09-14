@@ -1,17 +1,16 @@
-package com.scottlogic.training.api;
+package com.scottlogic.training.order;
 
-import com.scottlogic.training.Direction;
-import com.scottlogic.training.Order;
+import com.scottlogic.training.direction.Direction;
 
-import static com.scottlogic.training.DirectionUtils.stringToDirection;
+import static com.scottlogic.training.direction.DirectionUtils.stringToDirection;
 
-public class OrderRequest {
+public class OrderDTO {
     public String username;
     public int price;
     public int quantity;
     public Direction direction;
 
-    public OrderRequest(String username, int price, int quantity, String direction) {
+    public OrderDTO(String username, int price, int quantity, String direction) {
         this.username = username;
         this.price = price;
         this.quantity = quantity;

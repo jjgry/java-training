@@ -1,4 +1,4 @@
-package com.scottlogic.training;
+package com.scottlogic.training.greeting;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -13,7 +13,7 @@ public class GreetingController {
     private final AtomicLong counter = new AtomicLong();
 
     @GetMapping("/greeting")
-    public Greeting greeting(@RequestParam(value = "order", defaultValue = "World") String name) {
+    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
         return new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
 }

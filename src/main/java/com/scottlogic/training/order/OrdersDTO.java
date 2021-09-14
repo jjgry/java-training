@@ -1,6 +1,4 @@
-package com.scottlogic.training.api;
-
-import com.scottlogic.training.Order;
+package com.scottlogic.training.order;
 
 import java.util.List;
 

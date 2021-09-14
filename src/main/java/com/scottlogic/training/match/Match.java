@@ -1,4 +1,7 @@
-package com.scottlogic.training;
+package com.scottlogic.training.match;
+
+import com.scottlogic.training.direction.Direction;
+import com.scottlogic.training.order.Order;
 
 public class Match {
     public boolean successful;

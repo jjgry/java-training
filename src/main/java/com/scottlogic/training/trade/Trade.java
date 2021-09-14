@@ -1,41 +1,41 @@
-package com.scottlogic.training;
+package com.scottlogic.training.trade;
 
 import java.util.Date;
 import java.util.UUID;
 
-public class Order implements Cloneable {
+public class Trade implements Cloneable {
     public UUID id;
-    public String username;
+    public String buyerUsername;
+    public String sellerUsername;
     public int price;
     public int quantity;
-    public Direction direction;
     public Date timestamp;
 
-    public Order(String username, int price, int quantity, Direction direction) {
+    public Trade(String buyerUsername, String sellerUsername, int price, int quantity) {
         id = UUID.randomUUID();
-        this.username = username;
+        this.buyerUsername = buyerUsername;
+        this.sellerUsername = sellerUsername;
         this.price = price;
         this.quantity = quantity;
-        this.direction = direction;
         timestamp = new Date();
     }
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "Trade{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", buyerUsername='" + buyerUsername + '\'' +
+                ", sellerUsername='" + sellerUsername + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", direction=" + direction +
                 ", timestamp=" + timestamp +
                 '}';
     }
 
     @Override
-    public Order clone() {
+    public Trade clone() {
         try {
-            Order clone = (Order) super.clone();
+            Trade clone = (Trade) super.clone();
             clone.timestamp = (Date) this.timestamp.clone();
             clone.id = UUID.fromString(this.id.toString());
             return clone;
@@ -46,10 +46,10 @@ public class Order implements Cloneable {
 
     @Override
     public boolean equals(Object anObject) {
-        if (!(anObject instanceof Order)) {
+        if (!(anObject instanceof Trade)) {
             return false;
         }
-        Order otherMember = (Order) anObject;
+        Trade otherMember = (Trade) anObject;
         return otherMember.id.equals(this.id);
     }
 }
