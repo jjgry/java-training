@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class OrdersController {
+public class OrderController {
     private final Matcher matcher = new Matcher();
     private final AtomicLong counter = new AtomicLong();
 
