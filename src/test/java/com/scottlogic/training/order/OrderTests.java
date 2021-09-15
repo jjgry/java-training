@@ -54,7 +54,7 @@ public class OrderTests {
         assertViolationIs(
                 order,
                 "quantity",
-                "must be greater than or equal to 1",
+                "must be greater than 0",
                 -20
         );
     }
@@ -65,7 +65,7 @@ public class OrderTests {
         assertViolationIs(
                 order,
                 "quantity",
-                "must be greater than or equal to 1",
+                "must be greater than 0",
                 0
         );
     }
@@ -76,7 +76,7 @@ public class OrderTests {
         assertViolationIs(
                 order,
                 "price",
-                "must be greater than or equal to 1",
+                "must be greater than 0",
                 -50
         );
     }

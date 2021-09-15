@@ -2,8 +2,8 @@ package com.scottlogic.training.order;
 
 import com.scottlogic.training.direction.Direction;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,9 +11,9 @@ public class Order implements Cloneable {
     public UUID id;
     @NotNull
     public String username;
-    @Min(1)
+    @Positive
     public int price;
-    @Min(1)
+    @Positive
     public int quantity;
     @NotNull
     public Direction direction;
