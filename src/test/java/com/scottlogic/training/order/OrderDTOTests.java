@@ -13,7 +13,10 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class OrderTests {
+/**
+ * Tests to ensure that the validation on incoming Order DTOs is performed correctly
+ */
+public class OrderDTOTests {
 
     private static ValidatorFactory validatorFactory;
     private static Validator validator;
@@ -29,14 +32,14 @@ public class OrderTests {
         validatorFactory.close();
     }
 
-    int numberOfViolations(Order order) {
-        return validator.validate(order).size();
+    int numberOfViolations(OrderDTO orderDTO) {
+        return validator.validate(orderDTO).size();
     }
 
-    void assertViolationIs(Order order, String property, String message, Integer value) {
-        Set<ConstraintViolation<Order>> violations = validator.validate(order);
+    void assertViolationIs(OrderDTO orderDTO, String property, String message, Integer value) {
+        Set<ConstraintViolation<OrderDTO>> violations = validator.validate(orderDTO);
         assertEquals(1, violations.size());
-        ConstraintViolation<Order> violation = violations.iterator().next();
+        ConstraintViolation<OrderDTO> violation = violations.iterator().next();
         assertEquals(message, violation.getMessage());
         assertEquals(property, violation.getPropertyPath().toString());
         assertEquals(value, violation.getInvalidValue());
@@ -44,15 +47,15 @@ public class OrderTests {
 
     @Test
     void acceptsAValidOrder() {
-        Order order = new Order("username", 50, 20, Direction.SELL);
-        assertEquals(0, numberOfViolations(order));
+        OrderDTO orderDTO = new OrderDTO("username", 50, 20, Direction.SELL);
+        assertEquals(0, numberOfViolations(orderDTO));
     }
 
     @Test
     void rejectsNegativeQuantity() {
-        Order order = new Order("username", 50, -20, Direction.SELL);
+        OrderDTO orderDTO = new OrderDTO("username", 50, -20, Direction.SELL);
         assertViolationIs(
-                order,
+                orderDTO,
                 "quantity",
                 "must be greater than 0",
                 -20
@@ -61,9 +64,9 @@ public class OrderTests {
 
     @Test
     void rejectsZeroQuantity() {
-        Order order = new Order("username", 50, 0, Direction.SELL);
+        OrderDTO orderDTO = new OrderDTO("username", 50, 0, Direction.SELL);
         assertViolationIs(
-                order,
+                orderDTO,
                 "quantity",
                 "must be greater than 0",
                 0
@@ -72,9 +75,9 @@ public class OrderTests {
 
     @Test
     void rejectsNegativePrice() {
-        Order order = new Order("username", -50, 20, Direction.SELL);
+        OrderDTO orderDTO = new OrderDTO("username", -50, 20, Direction.SELL);
         assertViolationIs(
-                order,
+                orderDTO,
                 "price",
                 "must be greater than 0",
                 -50
@@ -83,21 +86,21 @@ public class OrderTests {
 
     @Test
     void acceptsSellDirection() {
-        Order order = new Order("username", 50, 20, Direction.SELL);
-        assertEquals(0, numberOfViolations(order));
+        OrderDTO orderDTO = new OrderDTO("username", 50, 20, Direction.SELL);
+        assertEquals(0, numberOfViolations(orderDTO));
     }
 
     @Test
     void acceptsBuyDirection() {
-        Order order = new Order("username", 50, 20, Direction.BUY);
-        assertEquals(0, numberOfViolations(order));
+        OrderDTO orderDTO = new OrderDTO("username", 50, 20, Direction.BUY);
+        assertEquals(0, numberOfViolations(orderDTO));
     }
 
     @Test
     void rejectsNullDirection() {
-        Order order = new Order("username", 50, 20, null);
+        OrderDTO orderDTO = new OrderDTO("username", 50, 20, null);
         assertViolationIs(
-                order,
+                orderDTO,
                 "direction",
                 "must not be null",
                 null

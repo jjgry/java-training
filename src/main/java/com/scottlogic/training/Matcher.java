@@ -19,7 +19,7 @@ public class Matcher {
     /**
      * @param order The order to validate
      */
-    public void receiveOrder(@Valid Order order) {
+    public void receiveOrder(Order order) {
         Match match = findMatch(order);
         if (match.successful) {
             makeTrade(match);

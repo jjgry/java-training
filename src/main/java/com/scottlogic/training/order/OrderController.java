@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class OrderController {
     private final Matcher matcher = new Matcher();
@@ -19,7 +21,7 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public OrdersDTO postOrder(@RequestBody OrderDTO orderDTO) {
+    public OrdersDTO postOrder(@RequestBody @Valid OrderDTO orderDTO) {
         matcher.receiveOrder(orderDTO.makeOrder());
         return new OrdersDTO(counter.incrementAndGet(), matcher.state.getOrders());
     }
