@@ -27,10 +27,10 @@ public class OrderModule {
         this.namespace = server.addNamespace("/order");
         this.namespace.addConnectListener(onConnected());
         this.namespace.addDisconnectListener(onDisconnected());
-        this.namespace.addEventListener("order", ExampleOrderDTO.class, onOrderReceived());
+        this.namespace.addEventListener("order", OrderDTO.class, onOrderReceived());
     }
 
-    private DataListener<ExampleOrderDTO> onOrderReceived() {
+    private DataListener<OrderDTO> onOrderReceived() {
         return (client, data, ackSender) -> {
             log.debug("Client[{}] - Received order message '{}'", client.getSessionId().toString(), data);
             namespace.getBroadcastOperations().sendEvent("order", data);
@@ -45,9 +45,7 @@ public class OrderModule {
     }
 
     private DisconnectListener onDisconnected() {
-        return client -> {
-            log.debug("Client[{}] - Disconnected from order module.", client.getSessionId().toString());
-        };
+        return client -> log.debug("Client[{}] - Disconnected from order module.", client.getSessionId().toString());
     }
     private static final Logger log = LoggerFactory.getLogger(OrderModule.class);
 }
