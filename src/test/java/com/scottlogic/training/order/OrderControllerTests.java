@@ -37,7 +37,8 @@ public class OrderControllerTests {
 
     @Test
     public void initialGetRequestShouldReturnNoOrders() throws Exception {
-        this.mockMvc.perform(get("/orders")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/orders"))
+                .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.orders.length()").value(0));
     }
 
@@ -49,7 +50,13 @@ public class OrderControllerTests {
                         "    \"quantity\": 10,\n" +
                         "    \"direction\": \"SELL\"\n" +
                         "}").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.orders.length()").value(1));
     }
 
+    @Test
+    public void badPostRequestShouldReturnOneOrder() throws Exception {
+        this.mockMvc.perform(post("/orders").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isBadRequest());
+    }
 }

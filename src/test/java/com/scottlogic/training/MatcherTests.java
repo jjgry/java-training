@@ -21,51 +21,6 @@ public class MatcherTests {
     }
 
     @Nested
-    class Validation {
-        @Test
-        void acceptsAValidOrder() {
-            Order order = new Order("username", 50, 20, Direction.SELL);
-            assertTrue(Matcher.isValidOrder(order));
-        }
-
-        @Test
-        void rejectsNegativeQuantity() {
-            Order order = new Order("username", 50, -20, Direction.SELL);
-            assertFalse(Matcher.isValidOrder(order));
-        }
-
-        @Test
-        void rejectsZeroQuantity() {
-            Order order = new Order("username", 50, 0, Direction.SELL);
-            assertFalse(Matcher.isValidOrder(order));
-        }
-
-        @Test
-        void rejectsNegativePrice() {
-            Order order = new Order("username", -50, 20, Direction.SELL);
-            assertFalse(Matcher.isValidOrder(order));
-        }
-
-        @Test
-        void acceptsSellDirection() {
-            Order order = new Order("username", 50, 20, Direction.SELL);
-            assertTrue(Matcher.isValidOrder(order));
-        }
-
-        @Test
-        void acceptsBuyDirection() {
-            Order order = new Order("username", 50, 20, Direction.BUY);
-            assertTrue(Matcher.isValidOrder(order));
-        }
-
-        @Test
-        void rejectsNullDirection() {
-            Order order = new Order("username", 50, 20, null);
-            assertFalse(Matcher.isValidOrder(order));
-        }
-    }
-
-    @Nested
     class Matching {
         @Nested
         class BuyOrderAndNewSellOrder {

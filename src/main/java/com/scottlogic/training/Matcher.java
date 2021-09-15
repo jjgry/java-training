@@ -6,6 +6,7 @@ import com.scottlogic.training.order.Order;
 import com.scottlogic.training.state.State;
 import com.scottlogic.training.trade.Trade;
 
+import javax.validation.Valid;
 import java.util.List;
 
 public class Matcher {
@@ -17,36 +18,14 @@ public class Matcher {
 
     /**
      * @param order The order to validate
-     * @return Whether the order was successfully received
      */
-    public boolean receiveOrder(Order order) {
-        if (!isValidOrder(order)) {
-            return false;
-        }
+    public void receiveOrder(@Valid Order order) {
         Match match = findMatch(order);
         if (match.successful) {
             makeTrade(match);
         } else {
             state.addOrder(order);
         }
-        return true;
-    }
-
-    /**
-     * @param order The order to validate
-     * @return Whether the order is valid
-     */
-    public static boolean isValidOrder(Order order) {
-        if (order.direction != Direction.BUY && order.direction != Direction.SELL) {
-            return false; // Direction must be 'buy' or 'sell'
-        }
-        if (order.price < 0) {
-            return false; // Price must not be negative or falsy (allow zero)
-        }
-        if (order.quantity <= 0) {
-            return false; // Quantity must be positive and non-zero
-        }
-        return true;
     }
 
     /**
