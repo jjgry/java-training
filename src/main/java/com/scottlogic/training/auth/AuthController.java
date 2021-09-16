@@ -1,7 +1,12 @@
 package com.scottlogic.training.auth;
 
-import java.util.Set;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import com.scottlogic.training.user.User;
+import com.scottlogic.training.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,30 +17,38 @@ import javax.validation.Valid;
 
 @RestController
 public class AuthController {
-    private Set<LoginCredential> logins;
+    private Map<String, String> usernameToToken;
+
+    @Autowired
+    UserService userService;
 
 
     public AuthController() {
-        logins = Set.of(
-                new LoginCredential("testUsername", "testPassword")
-        );
+        usernameToToken = new HashMap<>();
     }
 
-    private LoginCredential getLoginCredential(AuthDTO authDTO) {
-        for (LoginCredential login : logins) {
-            if (login.username.equals(authDTO.username)
-                    && login.password.equals((authDTO.password))) {
-                return login;
+    private String generateToken(AuthDTO authDTO) {
+        String token = authDTO.username + authDTO.password;
+        usernameToToken.put(authDTO.username, token);
+        return token;
+    }
+
+    private boolean isValidUsernamePasswordPair(AuthDTO authDTO) {
+        List<User> allUsers = userService.getAllUser();
+        for (User user: allUsers) {
+            if (user.getUsername().equals(authDTO.username)
+                    && user.getPassword().equals(authDTO.password)) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @PostMapping("/auth")
     public ResponseEntity<String> postOrder(@RequestBody @Valid AuthDTO authDTO) {
-        LoginCredential loginCredential = getLoginCredential(authDTO);
-        if (loginCredential != null) {
-            return new ResponseEntity<>(loginCredential.token, HttpStatus.OK);
+        if (isValidUsernamePasswordPair(authDTO)) {
+            String token = generateToken(authDTO);
+            return new ResponseEntity<>(token, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
