@@ -1,4 +1,4 @@
-package com.scottlogic.training.order;
+package com.scottlogic.training.matcher.order;
 
 import java.util.List;
 

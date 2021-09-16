@@ -1,6 +1,6 @@
-package com.scottlogic.training.order;
+package com.scottlogic.training.matcher.order;
 
-import com.scottlogic.training.direction.Direction;
+import com.scottlogic.training.matcher.direction.Direction;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;

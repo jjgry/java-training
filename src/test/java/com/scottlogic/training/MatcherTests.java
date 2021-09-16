@@ -1,9 +1,10 @@
 package com.scottlogic.training;
 
-import com.scottlogic.training.direction.Direction;
-import com.scottlogic.training.match.Match;
-import com.scottlogic.training.order.Order;
-import com.scottlogic.training.trade.Trade;
+import com.scottlogic.training.matcher.Matcher;
+import com.scottlogic.training.matcher.direction.Direction;
+import com.scottlogic.training.matcher.match.Match;
+import com.scottlogic.training.matcher.order.Order;
+import com.scottlogic.training.matcher.trade.Trade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,12 +1,11 @@
-package com.scottlogic.training;
+package com.scottlogic.training.matcher;
 
-import com.scottlogic.training.direction.Direction;
-import com.scottlogic.training.match.Match;
-import com.scottlogic.training.order.Order;
-import com.scottlogic.training.state.State;
-import com.scottlogic.training.trade.Trade;
+import com.scottlogic.training.matcher.direction.Direction;
+import com.scottlogic.training.matcher.match.Match;
+import com.scottlogic.training.matcher.order.Order;
+import com.scottlogic.training.matcher.state.State;
+import com.scottlogic.training.matcher.trade.Trade;
 
-import javax.validation.Valid;
 import java.util.List;
 
 public class Matcher {

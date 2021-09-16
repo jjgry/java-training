@@ -1,8 +1,8 @@
-package com.scottlogic.training.order;
+package com.scottlogic.training.matcher.order;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.scottlogic.training.Matcher;
+import com.scottlogic.training.matcher.Matcher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

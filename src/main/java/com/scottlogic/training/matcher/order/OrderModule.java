@@ -1,4 +1,4 @@
-package com.scottlogic.training.order;
+package com.scottlogic.training.matcher.order;
 
 import com.corundumstudio.socketio.HandshakeData;
 import com.corundumstudio.socketio.SocketIONamespace;

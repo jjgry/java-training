@@ -1,7 +1,7 @@
-package com.scottlogic.training.state;
+package com.scottlogic.training.matcher.state;
 
-import com.scottlogic.training.order.Order;
-import com.scottlogic.training.trade.Trade;
+import com.scottlogic.training.matcher.order.Order;
+import com.scottlogic.training.matcher.trade.Trade;
 
 import java.util.ArrayList;
 import java.util.List;
