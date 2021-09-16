@@ -1,10 +1,8 @@
 package com.scottlogic.training.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,21 +22,21 @@ public class UserController {
     }
 
     //creating a get mapping that retrieves the detail of a specific student
-    @GetMapping("/user/{id}")
-    private User getUser(@PathVariable("id") int id) {
-        return userService.getUserById(id);
+    @GetMapping("/user/{username}")
+    private User getUser(@PathVariable("username") String username) {
+        return userService.getUserByUsername(username);
     }
 
     //creating a delete mapping that deletes a specific student
-    @DeleteMapping("/user/{id}")
-    private void deleteUser(@PathVariable("id") int id) {
-        userService.delete(id);
+    @DeleteMapping("/user/{username}")
+    private void deleteUser(@PathVariable("username") String username) {
+        userService.delete(username);
     }
 
     //creating post mapping that post the student detail in the database
     @PostMapping("/user")
-    private int saveUser(@RequestBody User user) {
+    private User saveUser(@RequestBody User user) {
         userService.saveOrUpdate(user);
-        return user.getId();
+        return user;
     }
 }
