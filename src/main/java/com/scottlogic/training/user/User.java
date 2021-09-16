@@ -1,4 +1,4 @@
-package com.scottlogic.training;
+package com.scottlogic.training.user;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package com.scottlogic.training;
+package com.scottlogic.training.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

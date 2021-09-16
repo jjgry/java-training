@@ -1,7 +1,8 @@
-package com.scottlogic.training;
+package com.scottlogic.training.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,20 +13,20 @@ public class UserService {
     UserRepository userRepository;
 
     public List<User> getAllUser() {
-        List<User> users = new ArrayList<User>();
-        userRepository.findAll().forEach(user -> users.add(user));
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
         return users;
     }
 
     public User getUserById(int id) {
-        return userRepository.findById(id).get();
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
     }
 
     public void saveOrUpdate(User user) {
         userRepository.save(user);
     }
 
-    //deleting a specific record
     public void delete(int id) {
         userRepository.deleteById(id);
     }
