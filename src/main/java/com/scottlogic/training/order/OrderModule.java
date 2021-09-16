@@ -23,7 +23,6 @@ public class OrderModule {
 
     @Autowired
     public OrderModule(SocketIOServer server) {
-        System.out.println("hello there");
         this.namespace = server.addNamespace("/order");
         this.namespace.addConnectListener(onConnected());
         this.namespace.addDisconnectListener(onDisconnected());

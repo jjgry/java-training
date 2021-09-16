@@ -10,6 +10,15 @@ public class LoginCredential {
     public LoginCredential(String username, String password) {
         this.username = username;
         this.password = password;
-        this.token = UUID.randomUUID().toString();
+        this.token = username + password;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginCredential{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

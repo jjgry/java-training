@@ -2,8 +2,6 @@ package com.scottlogic.training;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.scottlogic.training.direction.Direction;
-import com.scottlogic.training.order.Order;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -12,9 +12,14 @@ import javax.validation.Valid;
 
 @RestController
 public class AuthController {
-    private Set<LoginCredential> logins = Set.of(
-            new LoginCredential("testUsername", "testPassword")
-    );
+    private Set<LoginCredential> logins;
+
+
+    public AuthController() {
+        logins = Set.of(
+                new LoginCredential("testUsername", "testPassword")
+        );
+    }
 
     private LoginCredential getLoginCredential(AuthDTO authDTO) {
         for (LoginCredential login : logins) {
