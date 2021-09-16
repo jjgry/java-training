@@ -30,7 +30,7 @@ public class UserController {
     }
 
     //creating post mapping that post the student detail in the database
-    @PostMapping("/student")
+    @PostMapping("/user")
     private int saveUser(@RequestBody User user) {
         userService.saveOrUpdate(user);
         return user.getId();
