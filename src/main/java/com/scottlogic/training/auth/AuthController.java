@@ -22,7 +22,6 @@ public class AuthController {
     @Autowired
     UserService userService;
 
-
     public AuthController() {
         usernameToToken = new HashMap<>();
     }

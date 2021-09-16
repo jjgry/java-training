@@ -12,6 +12,19 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    public List<User> generateUsers(int numberOfUsers) {
+        List<User> generatedUsers = new ArrayList<>();
+        for (int i = 1; i <= numberOfUsers; i++) {
+            String username = "username" + i;
+            String password = "password" + i;
+            generatedUsers.add(new User(username, password));
+        }
+        for (User user : generatedUsers) {
+            saveOrUpdate(user);
+        }
+        return generatedUsers;
+    }
+
     public List<User> getAllUser() {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);

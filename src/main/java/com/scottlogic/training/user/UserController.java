@@ -1,15 +1,21 @@
 package com.scottlogic.training.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class UserController {
-    //autowired the StudentService class
     @Autowired
     UserService userService;
+
+    @GetMapping("/generateUsers")
+    private List<User> generateUsers(@RequestParam("number") int numberOfUsers) {
+        return userService.generateUsers(numberOfUsers);
+    }
 
     //creating a get mapping that retrieves all the students detail from the database
     @GetMapping("/user")
