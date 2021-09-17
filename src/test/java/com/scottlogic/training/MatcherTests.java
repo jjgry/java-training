@@ -5,25 +5,32 @@ import com.scottlogic.training.matcher.direction.Direction;
 import com.scottlogic.training.matcher.match.Match;
 import com.scottlogic.training.matcher.order.Order;
 import com.scottlogic.training.trade.Trade;
+import com.scottlogic.training.trade.TradeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 public class MatcherTests {
-    @Autowired
+    @InjectMocks
     private Matcher matcher;
+
+    @Mock
+    private TradeService tradeService;
 
     @BeforeEach
     void initializeMatcher() {
         matcher.state.clear();
+        Mockito.doNothing().when(tradeService).addTrade(any());
     }
 
     @Nested
