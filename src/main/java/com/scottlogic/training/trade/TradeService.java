@@ -46,7 +46,12 @@ public class TradeService {
     }
 
     private Trade entityToTrade(QueryDocumentSnapshot document) {
-        UUID id = UUID.fromString(document.getId());
+        UUID id;
+        try {
+            id = UUID.fromString(document.getId());
+        } catch (IllegalArgumentException e) {
+            id = UUID.randomUUID();
+        }
         String buyerUsername = document.getString("buyerUsername");
         String sellerUsername = document.getString("sellerUsername");
         Long priceLong = document.getLong("price");
@@ -75,7 +80,7 @@ public class TradeService {
 
     public List<Trade> getTrades() {
         try {
-            ApiFuture<QuerySnapshot> query = db.collection("users").get();
+            ApiFuture<QuerySnapshot> query = db.collection("trades").get();
             QuerySnapshot querySnapshot = query.get();
             List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
             return documents.stream().map(this::entityToTrade).collect(Collectors.toList());
