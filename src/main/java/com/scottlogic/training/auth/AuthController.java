@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static com.scottlogic.training.PasswordService.isExpectedPassword;
+
 @RestController
 public class AuthController {
     private Map<String, String> usernameToToken;
@@ -34,9 +36,14 @@ public class AuthController {
 
     private boolean isValidUsernamePasswordPair(AuthDTO authDTO) {
         List<User> allUsers = userService.getAllUser();
-        for (User user: allUsers) {
-            if (user.getUsername().equals(authDTO.username)
-                    && user.getPassword().equals(authDTO.password)) {
+        for (User user : allUsers) {
+            if (!user.getUsername().equals(authDTO.username)) {
+                continue;
+            }
+            char[] passwordToTest = authDTO.password.toCharArray();
+            byte[] expectedHash = user.getPasswordHash();
+            byte[] salt = user.getSalt();
+            if (isExpectedPassword(passwordToTest, salt, expectedHash)) {
                 return true;
             }
         }

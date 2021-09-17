@@ -2,17 +2,22 @@ package com.scottlogic.training.user;
 
 import javax.persistence.*;
 
+import static com.scottlogic.training.PasswordService.getNextSalt;
+import static com.scottlogic.training.PasswordService.hash;
+
 @Entity
 public class User {
     @Id
     private String username;
-    private String password;
+    private byte[] salt;
+    private byte[] passwordHash;
 
     public User() {}
 
     public User(String username, String password) {
         this.username = username;
-        this.password = password;
+        this.salt = getNextSalt();
+        this.passwordHash = hash(password.toCharArray(), salt);
     }
 
     public String getUsername() {
@@ -23,11 +28,11 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public byte[] getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public byte[] getSalt() {
+        return salt;
     }
 }
