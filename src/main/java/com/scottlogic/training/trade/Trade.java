@@ -1,4 +1,4 @@
-package com.scottlogic.training.matcher.trade;
+package com.scottlogic.training.trade;
 
 import java.util.Date;
 import java.util.UUID;
@@ -18,6 +18,15 @@ public class Trade implements Cloneable {
         this.price = price;
         this.quantity = quantity;
         timestamp = new Date();
+    }
+
+    public Trade(UUID id, String buyerUsername, String sellerUsername, int price, int quantity, Date timestamp) {
+        this.id = id;
+        this.buyerUsername = buyerUsername;
+        this.sellerUsername = sellerUsername;
+        this.price = price;
+        this.quantity = quantity;
+        this.timestamp = timestamp;
     }
 
     @Override

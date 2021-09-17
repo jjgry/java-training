@@ -3,6 +3,7 @@ package com.scottlogic.training.matcher.order;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.scottlogic.training.matcher.Matcher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +13,8 @@ import javax.validation.Valid;
 
 @RestController
 public class OrderController {
-    private final Matcher matcher = new Matcher();
+    @Autowired
+    private Matcher matcher;
     private final AtomicLong counter = new AtomicLong();
 
     @GetMapping("/orders")

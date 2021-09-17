@@ -4,21 +4,26 @@ import com.scottlogic.training.matcher.Matcher;
 import com.scottlogic.training.matcher.direction.Direction;
 import com.scottlogic.training.matcher.match.Match;
 import com.scottlogic.training.matcher.order.Order;
-import com.scottlogic.training.matcher.trade.Trade;
+import com.scottlogic.training.trade.Trade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class MatcherTests {
+    @Autowired
     private Matcher matcher;
 
     @BeforeEach
     void initializeMatcher() {
-        matcher = new Matcher();
+        matcher.state.clear();
     }
 
     @Nested

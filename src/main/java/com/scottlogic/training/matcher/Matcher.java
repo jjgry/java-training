@@ -4,12 +4,18 @@ import com.scottlogic.training.matcher.direction.Direction;
 import com.scottlogic.training.matcher.match.Match;
 import com.scottlogic.training.matcher.order.Order;
 import com.scottlogic.training.matcher.state.State;
-import com.scottlogic.training.matcher.trade.Trade;
+import com.scottlogic.training.trade.Trade;
+import com.scottlogic.training.trade.TradeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class Matcher {
     public final State state;
+    @Autowired
+    public TradeService tradeService;
 
     public Matcher() {
         this.state = new State();
@@ -94,6 +100,7 @@ public class Matcher {
                 match.price, Math.min(match.newQuantity, match.existingQuantity));
 
         state.addTrade(trade);
+        tradeService.addTrade(trade);
 
         Order existingOrder = match.existingOrderDirection == Direction.BUY
                 ? match.buyOrder

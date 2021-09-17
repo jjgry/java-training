@@ -1,14 +1,14 @@
 package com.scottlogic.training.matcher.state;
 
 import com.scottlogic.training.matcher.order.Order;
-import com.scottlogic.training.matcher.trade.Trade;
+import com.scottlogic.training.trade.Trade;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class State {
-    private final ArrayList<Order> orders;
-    private final ArrayList<Trade> trades;
+    private ArrayList<Order> orders;
+    private ArrayList<Trade> trades;
 
     public State() {
         orders = new ArrayList<>();
@@ -41,5 +41,10 @@ public class State {
             tradesClone.add(trade.clone());
         }
         return tradesClone;
+    }
+
+    public void clear() {
+        orders = new ArrayList<>();
+        trades = new ArrayList<>();
     }
 }
