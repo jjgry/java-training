@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
@@ -16,19 +18,23 @@ public class UserController {
     @Autowired
     AuthService authService;
 
+    private List<UserDTO> toUserDTOList(List<User> users) {
+        return users.stream().map(User::toUserDTO).collect(Collectors.toList());
+    }
+
     @GetMapping("/generateUsers")
-    private List<User> generateUsers(@RequestParam("number") int numberOfUsers) {
-        return userService.generateUsers(numberOfUsers);
+    private List<UserDTO> generateUsers(@RequestParam("number") int numberOfUsers) {
+        return toUserDTOList(userService.generateUsers(numberOfUsers));
     }
 
     @GetMapping("/user")
-    private List<User> getAllUser() {
-        return userService.getAllUser();
+    private List<UserDTO> getAllUser() {
+        return toUserDTOList(userService.getAllUser());
     }
 
     @GetMapping("/user/{username}")
-    private User getUser(@PathVariable("username") String username) {
-        return userService.getUserByUsername(username);
+    private UserDTO getUser(@PathVariable("username") String username) {
+        return userService.getUserByUsername(username).toUserDTO();
     }
 
     @DeleteMapping("/user/{username}")
@@ -44,8 +50,8 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    private User saveUser(@RequestBody UserDTO userDto) {
+    private UserDTO saveUser(@RequestBody NewUserDTO userDto) {
         User user = new User(userDto.getUsername(), userDto.getPassword());
-        return userService.saveOrUpdate(user);
+        return userService.saveOrUpdate(user).toUserDTO();
     }
 }

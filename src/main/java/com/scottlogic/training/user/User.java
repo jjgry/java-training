@@ -2,6 +2,9 @@ package com.scottlogic.training.user;
 
 import javax.persistence.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.scottlogic.training.auth.PasswordService.getNextSalt;
 import static com.scottlogic.training.auth.PasswordService.hash;
 
@@ -35,4 +38,9 @@ public class User {
     public byte[] getSalt() {
         return salt;
     }
+
+    public UserDTO toUserDTO() {
+        return new UserDTO(username);
+    }
+
 }
