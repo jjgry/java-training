@@ -66,7 +66,6 @@ public class Trade implements Cloneable {
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
         map.put("buyerUsername", buyerUsername);
         map.put("sellerUsername", sellerUsername);
         map.put("price", price);
