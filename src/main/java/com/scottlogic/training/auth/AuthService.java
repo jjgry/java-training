@@ -2,6 +2,7 @@ package com.scottlogic.training.auth;
 
 import com.scottlogic.training.user.User;
 import com.scottlogic.training.user.UserService;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -56,5 +57,16 @@ public class AuthService {
             }
         }
         return false;
+    }
+
+    public String getUsername(String authorisationString) {
+        String tokenString = authorisationString.replace("Bearer ", "");
+        Claims claims = Jwts
+                .parserBuilder()
+                .setSigningKey(KEY)
+                .build()
+                .parseClaimsJws(tokenString)
+                .getBody();
+        return claims.getSubject();
     }
 }
