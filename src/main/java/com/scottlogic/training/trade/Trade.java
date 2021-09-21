@@ -1,6 +1,8 @@
 package com.scottlogic.training.trade;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Trade implements Cloneable {
@@ -60,5 +62,16 @@ public class Trade implements Cloneable {
         }
         Trade otherMember = (Trade) anObject;
         return otherMember.id.equals(this.id);
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("buyerUsername", buyerUsername);
+        map.put("sellerUsername", sellerUsername);
+        map.put("price", price);
+        map.put("quantity", quantity);
+        map.put("timestamp", timestamp);
+        return map;
     }
 }
