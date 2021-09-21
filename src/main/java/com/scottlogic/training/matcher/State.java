@@ -1,4 +1,4 @@
-package com.scottlogic.training.matcher.state;
+package com.scottlogic.training.matcher;
 
 import com.scottlogic.training.matcher.order.Order;
 import com.scottlogic.training.trade.Trade;

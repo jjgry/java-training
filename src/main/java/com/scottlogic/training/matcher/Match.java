@@ -1,6 +1,5 @@
-package com.scottlogic.training.matcher.match;
+package com.scottlogic.training.matcher;
 
-import com.scottlogic.training.matcher.direction.Direction;
 import com.scottlogic.training.matcher.order.Order;
 
 public class Match {

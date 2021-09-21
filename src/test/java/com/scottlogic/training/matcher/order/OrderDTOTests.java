@@ -1,6 +1,6 @@
 package com.scottlogic.training.matcher.order;
 
-import com.scottlogic.training.matcher.direction.Direction;
+import com.scottlogic.training.matcher.Direction;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package com.scottlogic.training;
 
 import com.scottlogic.training.matcher.Matcher;
-import com.scottlogic.training.matcher.direction.Direction;
-import com.scottlogic.training.matcher.match.Match;
+import com.scottlogic.training.matcher.Direction;
+import com.scottlogic.training.matcher.Match;
 import com.scottlogic.training.matcher.order.Order;
 import com.scottlogic.training.trade.Trade;
 import com.scottlogic.training.trade.TradeService;
