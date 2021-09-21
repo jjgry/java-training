@@ -1,9 +1,10 @@
 package com.scottlogic.training;
 
-import com.scottlogic.training.matcher.Matcher;
 import com.scottlogic.training.matcher.Direction;
 import com.scottlogic.training.matcher.Match;
+import com.scottlogic.training.matcher.Matcher;
 import com.scottlogic.training.order.Order;
+import com.scottlogic.training.order.OrderService;
 import com.scottlogic.training.trade.Trade;
 import com.scottlogic.training.trade.TradeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,9 +31,11 @@ public class MatcherTests {
     @Mock
     private TradeService tradeService;
 
+    @Mock
+    private OrderService orderService;
+
     @BeforeEach
     void initializeMatcher() {
-        matcher.state.clear();
         Mockito.doNothing().when(tradeService).addTrade(any());
     }
 
@@ -202,8 +208,8 @@ public class MatcherTests {
             Order updatedOrder2 = order2.clone();
             updatedOrder2.quantity = 10;
 
-            Trade actualTrade = matcher.state.getTrades().get(0);
-            assertEquals(List.of(updatedOrder2), matcher.state.getOrders());
+            Trade actualTrade = tradeService.getTrades().get(0);
+            assertEquals(List.of(updatedOrder2), orderService.getOrders());
             assertEquals(expectedTrade.buyerUsername, actualTrade.buyerUsername);
             assertEquals(expectedTrade.sellerUsername, actualTrade.sellerUsername);
             assertEquals(expectedTrade.price, actualTrade.price);
@@ -220,8 +226,8 @@ public class MatcherTests {
 
             matcher.makeTrade(match);
 
-            Trade actualTrade = matcher.state.getTrades().get(0);
-            assertEquals(new ArrayList<>(0), matcher.state.getOrders());
+            Trade actualTrade = tradeService.getTrades().get(0);
+            assertEquals(new ArrayList<>(0), orderService.getOrders());
             assertEquals(expectedTrade.buyerUsername, actualTrade.buyerUsername);
             assertEquals(expectedTrade.sellerUsername, actualTrade.sellerUsername);
             assertEquals(expectedTrade.price, actualTrade.price);
@@ -240,8 +246,8 @@ public class MatcherTests {
             Order updatedOrder1 = order1.clone();
             updatedOrder1.quantity = 10;
 
-            Trade actualTrade = matcher.state.getTrades().get(0);
-            assertEquals(List.of(updatedOrder1), matcher.state.getOrders());
+            Trade actualTrade = tradeService.getTrades().get(0);
+            assertEquals(List.of(updatedOrder1), orderService.getOrders());
             assertEquals(expectedTrade.buyerUsername, actualTrade.buyerUsername);
             assertEquals(expectedTrade.sellerUsername, actualTrade.sellerUsername);
             assertEquals(expectedTrade.price, actualTrade.price);
