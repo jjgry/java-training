@@ -5,8 +5,10 @@ import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,9 +17,13 @@ import java.io.InputStream;
 public class FirestoreRepository {
     public Firestore db;
 
-    public FirestoreRepository() {
+    @Value("${firestore.keyfile}")
+    private String FIREBASE_KEY_FILE;
+
+    @PostConstruct
+    public void init() {
         try {
-            InputStream serviceAccount = new FileInputStream("C:\\Users\\jjgray\\firebase-keys.json");
+            InputStream serviceAccount = new FileInputStream(FIREBASE_KEY_FILE);
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(credentials)
