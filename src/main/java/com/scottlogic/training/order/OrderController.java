@@ -1,4 +1,4 @@
-package com.scottlogic.training.matcher.order;
+package com.scottlogic.training.order;
 
 import com.scottlogic.training.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;

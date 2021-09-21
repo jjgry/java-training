@@ -1,4 +1,4 @@
-package com.scottlogic.training.matcher.order;
+package com.scottlogic.training.order;
 
 import java.util.List;
 import java.util.stream.Collectors;
