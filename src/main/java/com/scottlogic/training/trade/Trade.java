@@ -5,10 +5,10 @@ import java.util.UUID;
 
 public class Trade implements Cloneable {
     public UUID id;
-    public String buyerUsername;
-    public String sellerUsername;
-    public int price;
-    public int quantity;
+    public final String buyerUsername;
+    public final String sellerUsername;
+    public final int price;
+    public final int quantity;
     public Date timestamp;
 
     public Trade(String buyerUsername, String sellerUsername, int price, int quantity) {

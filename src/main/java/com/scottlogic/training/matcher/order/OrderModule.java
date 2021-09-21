@@ -11,11 +11,6 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/*
- * This is where you wire up your socket.io namespaces and events.
- *
- * Currently it just prints log messages on the events but you'll want to wire these events up to your matcher code.
- */
 @Component
 public class OrderModule {
 

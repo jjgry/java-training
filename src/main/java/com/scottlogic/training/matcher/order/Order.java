@@ -7,10 +7,10 @@ import java.util.UUID;
 
 public class Order implements Cloneable {
     public UUID id;
-    public String username;
-    public int price;
+    public final String username;
+    public final int price;
     public int quantity;
-    public Direction direction;
+    public final Direction direction;
     public Date timestamp;
 
     public Order(String username, int price, int quantity, Direction direction) {

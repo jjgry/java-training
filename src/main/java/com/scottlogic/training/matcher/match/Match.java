@@ -4,13 +4,13 @@ import com.scottlogic.training.matcher.direction.Direction;
 import com.scottlogic.training.matcher.order.Order;
 
 public class Match {
-    public boolean successful;
-    public Order buyOrder;
-    public Order sellOrder;
-    public int price;
-    public Direction existingOrderDirection;
-    public int newQuantity;
-    public int existingQuantity;
+    public final boolean successful;
+    public final Order buyOrder;
+    public final Order sellOrder;
+    public final int price;
+    public final Direction existingOrderDirection;
+    public final int newQuantity;
+    public final int existingQuantity;
 
     public Match(boolean successful,
                  Order buyOrder,
