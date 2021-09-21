@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.scottlogic.training.auth.AuthController.KEY;
+import static com.scottlogic.training.auth.AuthService.KEY;
 
 @RestController
 public class OrderController {

@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.scottlogic.training.auth.AuthController.KEY;
+import static com.scottlogic.training.auth.AuthService.KEY;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
