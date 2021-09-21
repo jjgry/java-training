@@ -4,7 +4,6 @@ import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
-
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
@@ -84,6 +83,23 @@ public class TradeService {
             QuerySnapshot querySnapshot = query.get();
             List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
             return documents.stream().map(this::entityToTrade).collect(Collectors.toList());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Trade> getTrades(String username) {
+        try {
+            ApiFuture<QuerySnapshot> query = db.collection("trades").get();
+            QuerySnapshot querySnapshot = query.get();
+            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+            List<Trade> trades = documents.stream().map(this::entityToTrade).collect(Collectors.toList());
+            trades.removeIf(
+                    trade -> !(trade.buyerUsername.equals(username)
+                            && trade.sellerUsername.equals(username))
+            );
+            return trades;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return new ArrayList<>();
