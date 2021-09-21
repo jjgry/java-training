@@ -3,6 +3,8 @@ package com.scottlogic.training.order;
 import com.scottlogic.training.matcher.Direction;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Order implements Cloneable {
@@ -20,6 +22,15 @@ public class Order implements Cloneable {
         this.quantity = quantity;
         this.direction = direction;
         timestamp = new Date();
+    }
+
+    public Order(UUID id, String username, int price, int quantity, Direction direction, Date timestamp) {
+        this.id = id;
+        this.username = username;
+        this.price = price;
+        this.quantity = quantity;
+        this.direction = direction;
+        this.timestamp = timestamp;
     }
 
     @Override
@@ -57,5 +68,15 @@ public class Order implements Cloneable {
 
     public OrderDTO toOrderDTO() {
         return new OrderDTO(price, quantity, direction);
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", username);
+        map.put("price", price);
+        map.put("quantity", quantity);
+        map.put("direction", direction);
+        map.put("timestamp", timestamp);
+        return map;
     }
 }

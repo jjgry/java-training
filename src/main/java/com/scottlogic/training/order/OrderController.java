@@ -1,6 +1,7 @@
 package com.scottlogic.training.order;
 
 import com.scottlogic.training.auth.AuthService;
+import com.scottlogic.training.matcher.Matcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,8 @@ import java.util.List;
 
 @RestController
 public class OrderController {
+    @Autowired
+    private Matcher matcher;
     @Autowired
     private OrderService orderService;
     @Autowired
@@ -22,10 +25,11 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public Order postOrder(
+    public void postOrder(
             @RequestHeader(value = "Authorization") String authorisation,
             @RequestBody @Valid OrderDTO orderDTO) {
         String username = authService.getUsername(authorisation);
-        return orderService.addOrder(orderDTO.makeOrder(username));
+
+        matcher.receiveOrder(orderDTO.makeOrder(username));
     }
 }

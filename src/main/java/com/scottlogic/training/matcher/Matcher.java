@@ -1,6 +1,7 @@
 package com.scottlogic.training.matcher;
 
-import com.scottlogic.training.matcher.order.Order;
+import com.scottlogic.training.order.Order;
+import com.scottlogic.training.order.OrderService;
 import com.scottlogic.training.trade.Trade;
 import com.scottlogic.training.trade.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,10 @@ import java.util.List;
 
 @Component
 public class Matcher {
-    public final State state;
+    @Autowired
+    public OrderService orderService;
     @Autowired
     public TradeService tradeService;
-
-    public Matcher() {
-        this.state = new State();
-    }
 
     /**
      * @param order The order to validate
@@ -26,7 +24,7 @@ public class Matcher {
         if (match.successful) {
             makeTrade(match);
         } else {
-            state.addOrder(order);
+            orderService.addOrder(order);
         }
     }
 
@@ -36,7 +34,7 @@ public class Matcher {
      * and, if so, the metadata attached to it
      */
     public Match findMatch(Order newOrder) {
-        List<Order> potentialOrders = state.getOrders(); // need to make deep copy
+        List<Order> potentialOrders = orderService.getOrders(); // need to make deep copy
 
         potentialOrders.removeIf(existingOrder ->
                 existingOrder.direction == newOrder.direction
@@ -96,7 +94,6 @@ public class Matcher {
                 match.sellOrder.username,
                 match.price, Math.min(match.newQuantity, match.existingQuantity));
 
-        state.addTrade(trade);
         tradeService.addTrade(trade);
 
         Order existingOrder = match.existingOrderDirection == Direction.BUY
@@ -105,14 +102,15 @@ public class Matcher {
         Order newOrder = match.existingOrderDirection == Direction.BUY
                 ? match.sellOrder
                 : match.buyOrder;
-        state.removeOrder(existingOrder);
+
+        orderService.removeOrder(existingOrder);
 
         if (match.newQuantity > match.existingQuantity) {
             newOrder.quantity = newOrder.quantity - existingOrder.quantity;
-            state.addOrder(newOrder);
+            receiveOrder(newOrder);
         } else if (match.newQuantity < match.existingQuantity) {
             existingOrder.quantity = existingOrder.quantity - newOrder.quantity;
-            state.addOrder(existingOrder);
+            orderService.addOrder(existingOrder);
         }
     }
 }
