@@ -1,27 +1,24 @@
 package com.scottlogic.training.matcher.order;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import com.scottlogic.training.auth.AuthService;
-import com.scottlogic.training.matcher.Matcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class OrderController {
     @Autowired
-    private Matcher matcher;
-
+    private OrderService orderService;
     @Autowired
     private AuthService authService;
 
-    private final AtomicLong counter = new AtomicLong();
-
     @GetMapping("/orders")
-    public OrdersDTO getOrders() {
-        return new OrdersDTO(counter.incrementAndGet(), matcher.state.getOrders());
+    public OrdersDTO getOrders(@RequestHeader(value = "Authorization") String authorisation) {
+        String username = authService.getUsername(authorisation);
+        List<Order> orders = orderService.getOrders(username);
+        return new OrdersDTO(orders);
     }
 
     @PostMapping("/orders")
@@ -29,8 +26,6 @@ public class OrderController {
             @RequestHeader(value = "Authorization") String authorisation,
             @RequestBody @Valid OrderDTO orderDTO) {
         String username = authService.getUsername(authorisation);
-        Order order = orderDTO.makeOrder(username);
-        matcher.receiveOrder(order);
-        return order;
+        return orderService.addOrder(orderDTO.makeOrder(username));
     }
 }

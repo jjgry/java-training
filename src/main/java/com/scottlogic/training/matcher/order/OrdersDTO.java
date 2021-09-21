@@ -1,13 +1,12 @@
 package com.scottlogic.training.matcher.order;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrdersDTO {
-    public final long id;
-    public final List<Order> orders;
+    public final List<OrderDTO> orders;
 
-    public OrdersDTO(long id, List<Order> orders) {
-        this.id = id;
-        this.orders = orders;
+    public OrdersDTO(List<Order> orders) {
+        this.orders = orders.stream().map(Order::toOrderDTO).collect(Collectors.toList());
     }
 }

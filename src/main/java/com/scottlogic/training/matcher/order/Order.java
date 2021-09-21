@@ -6,11 +6,11 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Order implements Cloneable {
-    public UUID id;
     public final String username;
     public final int price;
-    public int quantity;
     public final Direction direction;
+    public UUID id;
+    public int quantity;
     public Date timestamp;
 
     public Order(String username, int price, int quantity, Direction direction) {
@@ -53,5 +53,9 @@ public class Order implements Cloneable {
         }
         Order otherMember = (Order) anObject;
         return otherMember.id.equals(this.id);
+    }
+
+    public OrderDTO toOrderDTO() {
+        return new OrderDTO(price, quantity, direction);
     }
 }
