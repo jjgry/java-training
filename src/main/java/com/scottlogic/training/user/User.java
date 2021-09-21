@@ -2,8 +2,8 @@ package com.scottlogic.training.user;
 
 import javax.persistence.*;
 
-import static com.scottlogic.training.PasswordService.getNextSalt;
-import static com.scottlogic.training.PasswordService.hash;
+import static com.scottlogic.training.auth.PasswordService.getNextSalt;
+import static com.scottlogic.training.auth.PasswordService.hash;
 
 @Entity
 public class User {

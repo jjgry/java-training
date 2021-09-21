@@ -1,9 +1,7 @@
 package com.scottlogic.training.auth;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.scottlogic.training.user.User;
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.crypto.SecretKey;
 import javax.validation.Valid;
 
-import static com.scottlogic.training.PasswordService.isExpectedPassword;
+import static com.scottlogic.training.auth.PasswordService.isExpectedPassword;
 
 @RestController
 public class AuthController {

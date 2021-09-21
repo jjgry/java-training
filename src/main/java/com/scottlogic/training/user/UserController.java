@@ -31,8 +31,8 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    private User saveUser(@RequestBody User user) {
-        userService.saveOrUpdate(user);
-        return user;
+    private User saveUser(@RequestBody UserDTO userDto) {
+        User user = new User(userDto.getUsername(), userDto.getPassword());
+        return userService.saveOrUpdate(user);
     }
 }

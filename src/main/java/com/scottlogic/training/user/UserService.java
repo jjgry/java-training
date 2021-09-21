@@ -36,8 +36,8 @@ public class UserService {
         return user.orElse(null);
     }
 
-    public void saveOrUpdate(User user) {
-        userRepository.save(user);
+    public User saveOrUpdate(User user) {
+        return userRepository.save(user);
     }
 
     public void delete(String username) {

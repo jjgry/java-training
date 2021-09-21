@@ -6,8 +6,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 public class OrderDTO {
-    @NotNull
-    public String username;
     @Positive
     public int price;
     @Positive
@@ -17,14 +15,13 @@ public class OrderDTO {
 
     public OrderDTO() {}
 
-    public OrderDTO(String username, int price, int quantity, Direction direction) {
-        this.username = username;
+    public OrderDTO(int price, int quantity, Direction direction) {
         this.price = price;
         this.quantity = quantity;
         this.direction = direction;
     }
 
-    public Order makeOrder() {
+    public Order makeOrder(String username) {
         return new Order(username, price, quantity, direction);
     }
 }

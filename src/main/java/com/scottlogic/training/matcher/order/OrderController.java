@@ -3,13 +3,14 @@ package com.scottlogic.training.matcher.order;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.scottlogic.training.matcher.Matcher;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static com.scottlogic.training.auth.AuthController.KEY;
 
 @RestController
 public class OrderController {
@@ -23,8 +24,18 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public OrdersDTO postOrder(@RequestBody @Valid OrderDTO orderDTO) {
-        matcher.receiveOrder(orderDTO.makeOrder());
-        return new OrdersDTO(counter.incrementAndGet(), matcher.state.getOrders());
+    public Order postOrder(@RequestHeader(value = "Authorization") String authorisation, @RequestBody @Valid OrderDTO orderDTO) {
+        String tokenString = authorisation.replace("Bearer ", "");
+        Claims claims = Jwts
+                .parserBuilder()
+                .setSigningKey(KEY)
+                .build()
+                .parseClaimsJws(tokenString)
+                .getBody();
+
+        String username = claims.getSubject();
+        Order order = orderDTO.makeOrder(username);
+        matcher.receiveOrder(order);
+        return order;
     }
 }

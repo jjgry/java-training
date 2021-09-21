@@ -1,4 +1,4 @@
-package com.scottlogic.training;
+package com.scottlogic.training.auth;
 
 import org.springframework.stereotype.Service;
 
