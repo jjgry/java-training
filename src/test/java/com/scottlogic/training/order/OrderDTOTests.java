@@ -9,9 +9,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.*;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests to ensure that the validation on incoming Order DTOs is performed correctly
@@ -47,13 +47,13 @@ public class OrderDTOTests {
 
     @Test
     void acceptsAValidOrder() {
-        OrderDTO orderDTO = new OrderDTO("username", 50, 20, Direction.SELL);
+        OrderDTO orderDTO = new OrderDTO(50, 20, Direction.SELL);
         assertEquals(0, numberOfViolations(orderDTO));
     }
 
     @Test
     void rejectsNegativeQuantity() {
-        OrderDTO orderDTO = new OrderDTO("username", 50, -20, Direction.SELL);
+        OrderDTO orderDTO = new OrderDTO(50, -20, Direction.SELL);
         assertViolationIs(
                 orderDTO,
                 "quantity",
@@ -64,7 +64,7 @@ public class OrderDTOTests {
 
     @Test
     void rejectsZeroQuantity() {
-        OrderDTO orderDTO = new OrderDTO("username", 50, 0, Direction.SELL);
+        OrderDTO orderDTO = new OrderDTO(50, 0, Direction.SELL);
         assertViolationIs(
                 orderDTO,
                 "quantity",
@@ -75,7 +75,7 @@ public class OrderDTOTests {
 
     @Test
     void rejectsNegativePrice() {
-        OrderDTO orderDTO = new OrderDTO("username", -50, 20, Direction.SELL);
+        OrderDTO orderDTO = new OrderDTO(-50, 20, Direction.SELL);
         assertViolationIs(
                 orderDTO,
                 "price",
@@ -86,19 +86,19 @@ public class OrderDTOTests {
 
     @Test
     void acceptsSellDirection() {
-        OrderDTO orderDTO = new OrderDTO("username", 50, 20, Direction.SELL);
+        OrderDTO orderDTO = new OrderDTO(50, 20, Direction.SELL);
         assertEquals(0, numberOfViolations(orderDTO));
     }
 
     @Test
     void acceptsBuyDirection() {
-        OrderDTO orderDTO = new OrderDTO("username", 50, 20, Direction.BUY);
+        OrderDTO orderDTO = new OrderDTO(50, 20, Direction.BUY);
         assertEquals(0, numberOfViolations(orderDTO));
     }
 
     @Test
     void rejectsNullDirection() {
-        OrderDTO orderDTO = new OrderDTO("username", 50, 20, null);
+        OrderDTO orderDTO = new OrderDTO(50, 20, null);
         assertViolationIs(
                 orderDTO,
                 "direction",
