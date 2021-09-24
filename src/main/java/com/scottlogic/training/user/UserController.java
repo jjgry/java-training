@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,19 +21,19 @@ public class UserController {
         return users.stream().map(User::toUserDTO).collect(Collectors.toList());
     }
 
-    @GetMapping("/generateUsers")
-    private List<UserDTO> generateUsers(@RequestParam("number") int numberOfUsers) {
-        return toUserDTOList(userService.generateUsers(numberOfUsers));
-    }
+//    @GetMapping("/generateUsers")
+//    private List<UserDTO> generateUsers(@RequestParam("number") int numberOfUsers) {
+//        return toUserDTOList(userService.generateUsers(numberOfUsers));
+//    }
 
     @GetMapping("/user")
     private List<UserDTO> getAllUser() {
-        return toUserDTOList(userService.getAllUser());
+        return toUserDTOList(userService.getUsers());
     }
 
     @GetMapping("/user/{username}")
     private UserDTO getUser(@PathVariable("username") String username) {
-        return userService.getUserByUsername(username).toUserDTO();
+        return userService.getUser(username).toUserDTO();
     }
 
     @DeleteMapping("/user/{username}")
@@ -45,13 +44,15 @@ public class UserController {
         if (!authUsername.equals(username)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        userService.delete(username);
+        userService.removeUser(username);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/user")
-    private UserDTO saveUser(@RequestBody NewUserDTO userDto) {
+    private void saveUser(@RequestBody NewUserDTO userDto) {
         User user = new User(userDto.getUsername(), userDto.getPassword());
-        return userService.saveOrUpdate(user).toUserDTO();
+        userService.addUser(user);
     }
+
+
 }

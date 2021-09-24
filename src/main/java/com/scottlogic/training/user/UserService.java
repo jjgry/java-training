@@ -1,46 +1,78 @@
 package com.scottlogic.training.user;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
+import com.scottlogic.training.FirestoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-@Service
+@Component
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private FirestoreRepository firestoreRepository;
 
-    public List<User> generateUsers(int numberOfUsers) {
-        List<User> generatedUsers = new ArrayList<>();
-        for (int i = 1; i <= numberOfUsers; i++) {
-            String username = "username" + i;
-            String password = "password" + i;
-            generatedUsers.add(new User(username, password));
+    public void addUser(User user) {
+        DocumentReference docRef = firestoreRepository.db
+                .collection("users")
+                .document(user.username);
+        ApiFuture<WriteResult> result = docRef.set(user.toMap());
+        try {
+            System.out.println("Update time : " + result.get().getUpdateTime());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
-        for (User user : generatedUsers) {
-            saveOrUpdate(user);
+    }
+
+    public List<User> getUsers() {
+        try {
+            ApiFuture<QuerySnapshot> query = firestoreRepository.db
+                    .collection("users").get();
+            QuerySnapshot querySnapshot = query.get();
+            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+            return documents.stream().map(this::entityToUser).collect(Collectors.toList());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
-        return generatedUsers;
     }
 
-    public List<User> getAllUser() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
-        return users;
+    public User getUser(String username) {
+        try {
+            ApiFuture<DocumentSnapshot> query = firestoreRepository.db
+                    .collection("users").document(username).get();
+            DocumentSnapshot documentSnapshot = query.get();
+            return entityToUser(documentSnapshot);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public User getUserByUsername(String username) {
-        Optional<User> user = userRepository.findById(username);
-        return user.orElse(null);
+    private User entityToUser(DocumentSnapshot document) {
+        String username = document.getId();
+        String salt = document.getString("salt");
+        String passwordHash = document.getString("passwordHash");
+        if (salt == null || passwordHash == null) {
+            return null;
+        }
+        return new User(username, salt.getBytes(), passwordHash.getBytes());
     }
 
-    public User saveOrUpdate(User user) {
-        return userRepository.save(user);
-    }
-
-    public void delete(String username) {
-        userRepository.deleteById(username);
+    public void removeUser(String username) {
+        DocumentReference document = firestoreRepository.db
+                .collection("orders")
+                .document(username);
+        ApiFuture<WriteResult> writeResult = document.delete();
+        try {
+            System.out.println("Update time : " + writeResult.get().getUpdateTime());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }
+

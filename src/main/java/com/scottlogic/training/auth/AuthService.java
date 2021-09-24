@@ -44,14 +44,14 @@ public class AuthService {
 
 
     public boolean isValidUsernamePasswordPair(AuthDTO authDTO) {
-        List<User> allUsers = userService.getAllUser();
+        List<User> allUsers = userService.getUsers();
         for (User user : allUsers) {
-            if (!user.getUsername().equals(authDTO.username)) {
+            if (!user.username.equals(authDTO.username)) {
                 continue;
             }
             char[] passwordToTest = authDTO.password.toCharArray();
-            byte[] expectedHash = user.getPasswordHash();
-            byte[] salt = user.getSalt();
+            byte[] expectedHash = user.passwordHash;
+            byte[] salt = user.salt;
             if (isExpectedPassword(passwordToTest, salt, expectedHash)) {
                 return true;
             }

@@ -1,4 +1,4 @@
-package com.scottlogic.training.auth;
+package com.scottlogic.training;
 
 import io.jsonwebtoken.*;
 import org.springframework.lang.NonNull;

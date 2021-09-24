@@ -1,21 +1,15 @@
 package com.scottlogic.training.user;
 
-import javax.persistence.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.scottlogic.training.auth.PasswordService.getNextSalt;
 import static com.scottlogic.training.auth.PasswordService.hash;
 
-@Entity
 public class User {
-    @Id
-    private String username;
-    private byte[] salt;
-    private byte[] passwordHash;
-
-    public User() {}
+    public final String username;
+    public final byte[] salt;
+    public final byte[] passwordHash;
 
     public User(String username, String password) {
         this.username = username;
@@ -23,24 +17,22 @@ public class User {
         this.passwordHash = hash(password.toCharArray(), salt);
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
+    public User(String username, byte[] salt, byte[] passwordHash) {
         this.username = username;
-    }
-
-    public byte[] getPasswordHash() {
-        return passwordHash;
-    }
-
-    public byte[] getSalt() {
-        return salt;
+        this.salt = salt;
+        this.passwordHash = passwordHash;
     }
 
     public UserDTO toUserDTO() {
         return new UserDTO(username);
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", username);
+        map.put("salt", new String(salt));
+        map.put("passwordHash", new String(passwordHash));
+        return map;
     }
 
 }
