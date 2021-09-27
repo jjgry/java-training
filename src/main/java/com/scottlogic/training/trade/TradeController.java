@@ -17,8 +17,9 @@ public class TradeController {
     private AuthService authService;
 
     @GetMapping("/trades")
-    public List<Trade> getTrades(@RequestHeader(value = "Authorization") String authorisation) {
+    public TradesDTO getTrades(@RequestHeader(value = "Authorization") String authorisation) {
         String username = authService.getUsername(authorisation);
-        return tradeService.getTrades(username);
+        List<Trade> trades = tradeService.getTrades(username);
+        return new TradesDTO(trades);
     }
 }
