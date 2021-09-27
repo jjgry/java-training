@@ -1,6 +1,7 @@
 package com.scottlogic.training.order;
 
 import com.scottlogic.training.auth.AuthService;
+import com.scottlogic.training.matcher.Direction;
 import com.scottlogic.training.matcher.Matcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,13 @@ public class OrderController {
         String username = authService.getUsername(authorisation);
         List<Order> orders = orderService.getOrders(username);
         return new OrdersDTO(orders);
+    }
+
+    @GetMapping("/aggregated-orders")
+    public AggregatedOrderBookDTO getOrders() {
+        List<AggregatedDataPoint> buyData = orderService.getAggregatedOrders(Direction.BUY);
+        List<AggregatedDataPoint> sellData = orderService.getAggregatedOrders(Direction.SELL);
+        return new AggregatedOrderBookDTO(buyData, sellData);
     }
 
     @PostMapping("/orders")

@@ -11,10 +11,7 @@ import com.scottlogic.training.matcher.Direction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -61,6 +58,30 @@ public class OrderService {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<AggregatedDataPoint> getAggregatedOrders(Direction direction) {
+        List<Order> orders = getOrders();
+        Map<Integer, List<Order>> groupedByPrice = new HashMap<>();
+        for (Order order : orders) {
+            if (order.direction == direction) {
+                if (groupedByPrice.containsKey(order.price)) {
+                    groupedByPrice.get(order.price).add(order);
+                } else {
+                    groupedByPrice.put(order.price, List.of(order));
+                }
+            }
+        }
+        List<AggregatedDataPoint> summedByPrice = new ArrayList<>();
+        for (Map.Entry<Integer, List<Order>> datapoint : groupedByPrice.entrySet()) {
+            int aggQuantity = datapoint
+                    .getValue()
+                    .stream()
+                    .mapToInt(order -> order.quantity)
+                    .sum();
+            summedByPrice.add(new AggregatedDataPoint(datapoint.getKey(), aggQuantity, direction));
+        }
+        return summedByPrice;
     }
 
     private Order entityToOrder(QueryDocumentSnapshot document) {
