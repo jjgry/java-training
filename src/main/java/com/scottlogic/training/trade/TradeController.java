@@ -22,4 +22,10 @@ public class TradeController {
         List<Trade> trades = tradeService.getTrades(username);
         return new TradesDTO(trades);
     }
+
+    @GetMapping("/trade-history")
+    public TradesDTO getTrades() {
+        List<Trade> trades = tradeService.getTradeHistory();
+        return new TradesDTO(trades);
+    }
 }

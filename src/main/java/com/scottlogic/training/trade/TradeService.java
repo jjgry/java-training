@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class TradeService {
     @Autowired
     private FirestoreRepository firestoreRepository;
+    private long TRADE_HISTORY_LENGTH = 100;
 
     public void addTrade(Trade trade) {
         String docId = trade.id.toString();
@@ -46,20 +47,14 @@ public class TradeService {
     }
 
     public List<Trade> getTrades(String username) {
-        try {
-            ApiFuture<QuerySnapshot> query = firestoreRepository.db.collection("trades").get();
-            QuerySnapshot querySnapshot = query.get();
-            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-            List<Trade> trades = documents.stream().map(this::entityToTrade).collect(Collectors.toList());
-            trades.removeIf(
-                    trade -> !(trade.buyerUsername.equals(username)
-                            && trade.sellerUsername.equals(username))
-            );
-            return trades;
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+        List<Trade> trades = getTrades();
+        trades.removeIf(
+                trade -> !(trade.buyerUsername.equals(username) && trade.sellerUsername.equals(username)));
+        return trades;
+    }
+
+    public List<Trade> getTradeHistory() {
+        return getTrades().stream().limit(TRADE_HISTORY_LENGTH).collect(Collectors.toList());
     }
 
     private Trade entityToTrade(QueryDocumentSnapshot document) {
