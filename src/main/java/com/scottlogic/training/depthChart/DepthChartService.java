@@ -34,12 +34,12 @@ public class DepthChartService {
         return (maxBuyPrice + minSellPrice) / 2;
     }
 
-    private int getMin(Collection<Integer> collection) {
+    public static int getMin(Collection<Integer> collection) {
         Optional<Integer> min = collection.stream().min(Comparator.comparingInt(a -> a));
         return min.orElse(0);
     }
 
-    private int getMax(Collection<Integer> collection) {
+    public static int getMax(Collection<Integer> collection) {
         Optional<Integer> max = collection.stream().max(Comparator.comparingInt(a -> a));
         return max.orElse(0);
     }
