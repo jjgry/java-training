@@ -23,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .antMatchers(HttpMethod.GET, "/aggregated-orders").permitAll()
                 .antMatchers(HttpMethod.GET, "/trade-history").permitAll()
+                .antMatchers(HttpMethod.GET, "/depth-chart").permitAll()
                 .anyRequest().authenticated();
     }
 

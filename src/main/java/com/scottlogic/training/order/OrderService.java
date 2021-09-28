@@ -68,7 +68,9 @@ public class OrderService {
                 if (groupedByPrice.containsKey(order.price)) {
                     groupedByPrice.get(order.price).add(order);
                 } else {
-                    groupedByPrice.put(order.price, List.of(order));
+                    List<Order> newList = new ArrayList<>();
+                    newList.add(order);
+                    groupedByPrice.put(order.price, newList);
                 }
             }
         }
