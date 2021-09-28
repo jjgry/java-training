@@ -17,12 +17,10 @@ public class UserService {
     private FirestoreRepository firestoreRepository;
 
     public void addUser(User user) {
-        DocumentReference docRef = firestoreRepository.db
-                .collection("users")
-                .document(user.username);
-        ApiFuture<WriteResult> result = docRef.set(user.toMap());
+        CollectionReference collectionRef = firestoreRepository.db.collection("users");
+        ApiFuture<DocumentReference> result = collectionRef.add(user.toMap());
         try {
-            System.out.println("Update time : " + result.get().getUpdateTime());
+            System.out.println("Update time : " + result.get());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
